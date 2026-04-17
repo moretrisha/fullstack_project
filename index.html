@@ -1,297 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Stack Fundamentals - 10 Frontend Projects</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Clock</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      padding: 40px 20px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    header {
-      text-align: center;
-      color: white;
-      margin-bottom: 60px;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    header p {
-      font-size: 1.2rem;
-      opacity: 0.95;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      margin-bottom: 50px;
-    }
-
-    .project-card {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-      text-decoration: none;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0a0a0a;
+      font-family: 'Courier New', monospace;
     }
 
-    .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    }
-
-    .project-number {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #667eea;
-      margin-bottom: 10px;
-    }
-
-    .project-title {
-      font-size: 1.5rem;
-      color: #333;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .project-concepts {
-      font-size: 0.9rem;
-      color: #666;
-      flex-grow: 1;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .project-link {
-      display: inline-block;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 6px;
+    .clock-wrapper {
       text-align: center;
-      font-weight: 600;
-      transition: all 0.3s;
-      text-decoration: none;
-      align-self: flex-start;
     }
 
-    .project-link:hover {
-      opacity: 0.9;
-    }
-
-    .tech-stack {
-      background: white;
-      border-radius: 12px;
-      padding: 40px;
-      margin-bottom: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .tech-stack h2 {
-      color: #333;
+    .date {
+      font-size: 1.1rem;
+      letter-spacing: 0.3em;
+      color: #555;
+      text-transform: uppercase;
       margin-bottom: 20px;
+    }
+
+    .clock {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 700;
+      color: #00ff88;
+      text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+      letter-spacing: 0.05em;
+    }
+
+    .clock .colon {
+      animation: blink 1s step-start infinite;
+      display: inline-block;
+      width: 0.3em;
+      text-align: center;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .period {
       font-size: 1.8rem;
+      color: #00cc66;
+      margin-left: 10px;
+      vertical-align: super;
     }
 
-    .tech-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+    .timezone {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: #333;
+      letter-spacing: 0.2em;
     }
 
-    .tech-item {
-      background: #f5f5f5;
-      padding: 15px;
-      border-radius: 8px;
-      border-left: 4px solid #667eea;
-    }
-
-    .tech-item strong {
-      color: #667eea;
-    }
-
-    footer {
-      text-align: center;
-      color: white;
-      margin-top: 60px;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255,255,255,0.2);
-    }
-
-    footer p {
-      opacity: 0.9;
-    }
-
-    .github-badge {
-      display: inline-block;
-      margin-top: 20px;
-    }
-
-    .github-badge a {
-      color: white;
+    .back-link {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #00ff88;
       text-decoration: none;
-      font-weight: 600;
-      border: 2px solid white;
-      padding: 10px 20px;
-      border-radius: 6px;
+      font-size: 0.9rem;
+      border: 1px solid #00ff88;
+      padding: 8px 16px;
+      border-radius: 4px;
       transition: all 0.3s;
     }
 
-    .github-badge a:hover {
-      background: white;
-      color: #667eea;
-    }
-
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      header p {
-        font-size: 1rem;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
+    .back-link:hover {
+      background: #00ff88;
+      color: #0a0a0a;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🌐 Full Stack Fundamentals</h1>
-      <p>10 beginner-to-intermediate frontend projects using only HTML, CSS & JavaScript. Perfect for learning, portfolio building, or interview prep.</p>
-    </header>
 
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-number">01</div>
-        <div class="project-title">Digital Clock</div>
-        <div class="project-concepts">DOM manipulation, setInterval, Date API, CSS animations</div>
-        <a href="./01-digital-clock/" class="project-link">View Project →</a>
-      </div>
+  <a href="../" class="back-link">← Back to Projects</a>
 
-      <div class="project-card">
-        <div class="project-number">02</div>
-        <div class="project-title">To-Do List</div>
-        <div class="project-concepts">CRUD operations, localStorage, event handling, array methods</div>
-        <a href="./02-todo-list/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">03</div>
-        <div class="project-title">Calculator</div>
-        <div class="project-concepts">Functions, conditionals, keyboard events, state management</div>
-        <a href="./03-calculator/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">04</div>
-        <div class="project-title">Quiz App</div>
-        <div class="project-concepts">Arrays of objects, dynamic rendering, score tracking, CSS transitions</div>
-        <a href="./04-quiz-app/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">05</div>
-        <div class="project-title">Weather Card</div>
-        <div class="project-concepts">Fetch API, async/await, REST APIs, error handling</div>
-        <a href="./05-weather-card/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">06</div>
-        <div class="project-title">Color Palette Generator</div>
-        <div class="project-concepts">HSL color math, Clipboard API, CSS Grid, localStorage</div>
-        <a href="./06-color-palette-generator/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">07</div>
-        <div class="project-title">Form Validator</div>
-        <div class="project-concepts">Regex, real-time validation, password strength, UX feedback</div>
-        <a href="./07-form-validator/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">08</div>
-        <div class="project-title">Image Gallery</div>
-        <div class="project-concepts">CSS Masonry, Lightbox, keyboard navigation, filter/sort</div>
-        <a href="./08-image-gallery/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">09</div>
-        <div class="project-title">Expense Tracker</div>
-        <div class="project-concepts">Data aggregation, charts with CSS, localStorage, categories</div>
-        <a href="./09-expense-tracker/" class="project-link">View Project →</a>
-      </div>
-
-      <div class="project-card">
-        <div class="project-number">10</div>
-        <div class="project-title">Notes App</div>
-        <div class="project-concepts">Two-panel layout, auto-save, search/filter, CRUD with localStorage</div>
-        <a href="./10-notes-app/" class="project-link">View Project →</a>
-      </div>
+  <div class="clock-wrapper">
+    <div class="date" id="date">---</div>
+    <div class="clock">
+      <span id="hours">00</span>
+      <span class="colon">:</span>
+      <span id="minutes">00</span>
+      <span class="colon">:</span>
+      <span id="seconds">00</span>
+      <span class="period" id="period">AM</span>
     </div>
-
-    <div class="tech-stack">
-      <h2>🛠 Technology Stack</h2>
-      <div class="tech-list">
-        <div class="tech-item">
-          <strong>HTML5</strong><br>
-          Semantic markup, forms, accessibility
-        </div>
-        <div class="tech-item">
-          <strong>CSS3</strong><br>
-          Flexbox, Grid, animations, responsive design
-        </div>
-        <div class="tech-item">
-          <strong>JavaScript (ES6+)</strong><br>
-          DOM manipulation, array methods, async/await
-        </div>
-        <div class="tech-item">
-          <strong>Web APIs</strong><br>
-          localStorage, Fetch, Date, Clipboard, Intl
-        </div>
-      </div>
-    </div>
-
-    <footer>
-      <p>Made with ❤️ using only HTML, CSS, and JavaScript — no frameworks needed.</p>
-      <p>Perfect for students, portfolio building, and interview prep.</p>
-      <div class="github-badge">
-        <a href="https://github.com" target="_blank">View on GitHub →</a>
-      </div>
-      <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">MIT License — Free to use, modify, and share</p>
-    </footer>
+    <div class="timezone" id="timezone"></div>
   </div>
+
+  <script>
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function updateClock() {
+      const now = new Date();
+
+      // Hours (12-hour format)
+      let h = now.getHours();
+      const period = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+
+      const m = now.getMinutes();
+      const s = now.getSeconds();
+
+      document.getElementById('hours').textContent   = String(h).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+      document.getElementById('period').textContent  = period;
+
+      // Date
+      document.getElementById('date').textContent =
+        `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+      // Timezone
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      document.getElementById('timezone').textContent = tz;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
 </body>
 </html>
