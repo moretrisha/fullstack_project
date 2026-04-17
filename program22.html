@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img id="img" src="https://via.placeholder.com/200"><br>
+<button onclick="next()">Next</button>
+
+<script>
+let images = [
+"https://via.placeholder.com/200",
+"https://via.placeholder.com/201"
+];
+let i=0;
+
+function next(){
+i=(i+1)%images.length;
+document.getElementById("img").src=images[i];
+}
+</script>
+
+</body>
+</html>

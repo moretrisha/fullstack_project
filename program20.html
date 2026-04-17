@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form onsubmit="return validate()">
+Username: <input id="u"><br><br>
+Password: <input id="p" type="password"><br><br>
+<input type="submit">
+</form>
+
+<script>
+function validate() {
+let u = document.getElementById("u").value;
+let p = document.getElementById("p").value;
+
+if(u=="" || p==""){
+alert("All fields required");
+return false;
+}
+}
+</script>
+
+</body>
+</html>
